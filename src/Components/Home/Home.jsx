@@ -17,14 +17,42 @@ const Home = () => {
     { request: "Bye!", response: "Bye! 👋" }
   ]);
   const [message, setMessage] = useState("");
+  const [isRecording, setIsRecording] = useState(false);
 
+  // Check if the browser supports SpeechRecognition
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+
+  // Start voice recognition
+  const startVoiceRecognition = () => {
+    recognition.start();
+    setIsRecording(true);
+  };
+
+  // Handle voice recognition result
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    setMessage(transcript); // Set the transcript in the input
+    setIsRecording(false); // Stop recording after getting the result
+  };
+
+  // Handle any errors during recognition
+  recognition.onerror = (event) => {
+    console.error("Speech recognition error", event.error);
+    setIsRecording(false);
+  };
   const handleSend = (event) => {
     // Simulating a new chat message
-    setData(prevData => [
-      ...prevData,
-      { request: message, response: "Thank you for the message!" }
-    ]);
-    setMessage(''); // Clear the input after sending
+    
+    if (message.trim()) {
+      setData(prevData => [
+        ...prevData,
+        { request: message, response: "Thank you for the message!" }
+      ]);
+      console.log("Message sent:", message);
+      setMessage("");
+    }
     event.preventDefault()
   };
 
@@ -69,7 +97,13 @@ const Home = () => {
           >
             Send
           </button>
-        
+          <button
+            onClick={startVoiceRecognition}
+            
+            className={`ml-4 p-3 rounded-full ${isRecording ? "bg-red-500 disabled:" : "bg-blue-500"} text-white hover:bg-opacity-80`}
+          >
+            {isRecording ? "Recording..." : "🎤 Voice"}
+          </button>
       </div>
       </form>
     </div>
