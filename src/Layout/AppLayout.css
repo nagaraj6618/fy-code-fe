@@ -1,0 +1,16 @@
+.navbar-container{
+   height: 100vh;
+   width: 100%;
+   display: flex;
+}
+
+ .navbar {
+   width: 20%; /* 30% of the width for Navbar */
+   background-color: #f4f4f4; /* Optional: For visibility */
+ }
+ 
+ .app-router {
+   width: 80%; /* Remaining 70% for AppRouter */
+   background-color: #ffffff; /* Optional: For visibility */
+ }
+ 
