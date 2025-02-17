@@ -6,11 +6,11 @@ const Home = () => {
   const handleSend = () => {
     if (message.trim()) {
       console.log("Message sent:", message);
-      setMessage(""); // Clear the input field
+      setMessage("");
     }
   };
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-full">
     {/* Chat content */}
     <div className="flex-grow overflow-y-auto p-4">
       {/* Chat messages will appear here */}
