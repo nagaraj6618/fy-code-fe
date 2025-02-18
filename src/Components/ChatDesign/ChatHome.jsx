@@ -4,17 +4,20 @@ import ChatRecived from '../ChatDesign/ChatRecived';
 import { MdOutlineMicNone } from "react-icons/md";
 import { PiWaveform } from "react-icons/pi";
 import { IoMdSend } from "react-icons/io";
-
+import axios from "axios";
+import {prod_model_be_url,dev_model_be_url} from "../../utils/config.js"
+import Loading from "../Loading/Loading.jsx";
+import ErrorMessage from './ErrorMessage.jsx';
 const ChatHome = () => {
     const [data, setData] = useState([
-        { request: "Hi there! How are you?", response: "I'm good, thanks for asking! How about you?" },
-        { request: "I'm doing well, just got back from a trip.", response: "That sounds exciting! Where did you go?" },
-        { request: "I went to the mountains. It was a great escape from the city!", response: "Wow, sounds amazing! Nature is always refreshing." },
-        { request: "Hi there! How are you?", response: "I'm good, thanks for asking! How about you?" },
-        { request: "I'm doing well, just got back from a trip.", response: "That sounds exciting! Where did you go?" },
-        { request: "I went to the mountains. It was a great escape from the city!", response: "Wow, sounds amazing! Nature is always refreshing." },
+        { request: "Hi there! How are you?", response: {
+         score: "100",
+         suggest: "Everything is perfect",
+         id:1
+        } },
     ]);
-    
+    const [isLoading ,setIsLoading] = useState(false);
+    const [isError,setIsError] = useState(false);
     const [message, setMessage] = useState("");
     const [isRecording, setIsRecording] = useState(false);
     const recognitionRef = useRef(null);
@@ -84,16 +87,41 @@ const ChatHome = () => {
     };
 
     // Handle sending messages
-    const handleSend = (event) => {
+    const handleSend = async(event) => {
         event.preventDefault();
-        if (message.trim()) {
-            setData((prevData) => [
-                ...prevData,
-                { request: message, response: "Thank you for the message!" }
-            ]);
-            console.log("Message sent:", message);
-            setMessage("");
+        const id = data.length || 1;
+        try{
+            if (message.trim()) {
+                setData((prevData) => [
+                    ...prevData,
+                    { request: message,response:{},id:id}
+                ]);
+                console.log("Message sent:", message);
+                setMessage("");
+                setIsLoading(true);
+                setIsError(false);
+                const model_be_url =  `${prod_model_be_url}/calculate_score` 
+                console.log("URL: ",model_be_url)
+                // const response =  await axios.get(model_be_url);
+                const response =  await axios.post(model_be_url,{
+                   text : message
+                });
+                setIsLoading(false)
+                setData((prevData) => 
+                   prevData.map((item) => 
+                       item.id === id ? { ...item, response: response.data } : item
+                   )
+               );
+                console.log(response.data);
+    
+            }
         }
+        catch(err){
+            console.log("Error");
+            setIsLoading(false);
+            setIsError(true);
+        }
+        
     };
 
     // Auto-scroll to bottom on new message
@@ -111,9 +139,19 @@ const ChatHome = () => {
                 {data.map((chat, index) => (
                     <div key={index} className="message-container mb-4 opacity-100 animate-fadeIn">
                         <ChatSent message={chat.request} />
-                        <ChatRecived message={chat.response} />
+                       { chat?.response?.score &&<ChatRecived score = {chat?.response?.score}  suggestion={chat?.response?.suggest}/>}
+                       
                     </div>
                 ))}
+                {isLoading &&
+                 <div className='flex justify-start mb-4 '>
+                    <Loading/>
+                 </div>
+                 }
+                 {
+                    isError &&
+                    <div><ErrorMessage/></div>
+                 }
             </div>
 
             {/* Input and Send button */}

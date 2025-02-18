@@ -41,3 +41,43 @@ html, body {
   border-radius: 10px;
 }
 
+.dot {
+  font-size: 2.5rem;
+  color: #4F86C6; 
+  animation: ping 1.5s infinite;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+@keyframes ping {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIns {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-ins {
+  animation: fadeIns 0.5s ease-in-out;
+}

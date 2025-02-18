@@ -1,13 +1,14 @@
-import React from 'react'
 
-const ChatSent = ({message}) => {
+import React from "react";
+
+const ChatSent = ({ message }) => {
   return (
-   <div className="flex justify-end mb-4">
-   <div className="bg-green-500 text-white p-3 rounded-lg max-w-xs">
-     <span>{message}</span>
-   </div>
- </div>
-  )
-}
+    <div className="flex justify-end mb-4 animate-fade-ins">
+      <div className="bg-gradient-to-r from-green-600 to-green-500 text-white p-4 rounded-lg max-w-md shadow-md break-words">
+        <p className="text-base break-words whitespace-pre-wrap">{message}</p>
+      </div>
+    </div>
+  );
+};
 
-export default ChatSent
+export default ChatSent;
