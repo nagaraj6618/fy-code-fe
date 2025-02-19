@@ -5,7 +5,7 @@ import LoadingFull from '../Loading/LoadingFull';
 import {prod_be_url} from "../../utils/config";
 import axios from 'axios';
 import { useAuth } from "../../Context/AuthContext";
-import {showErrorToast,showInfoToast,showSuccessToast} from "../ToastMessage/ToastMessageComponent"
+import {showErrorToast,showInfoToast} from "../ToastMessage/ToastMessageComponent"
 
 const Login = () => {
   const {login} = useAuth();

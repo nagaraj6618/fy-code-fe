@@ -4,12 +4,10 @@ import React, { useState, useEffect } from 'react';
 import { prod_be_url } from '../../utils/config';
 import { showErrorToast, showSuccessToast, } from '../ToastMessage/ToastMessageComponent';
 import {useAuth} from "../../Context/AuthContext";
-import { useNavigate } from 'react-router-dom';
 import LoadingFull from '../Loading/LoadingFull';
 
 const OTPVerify = () => {
   const {verifyOtp} = useAuth();
-  const navigate = useNavigate();
   const [otp, setOtp] = useState('');
   const [timer, setTimer] = useState(120);
   const [isResendDisabled, setIsResendDisabled] = useState(true);

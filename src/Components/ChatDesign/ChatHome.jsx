@@ -5,7 +5,7 @@ import { MdOutlineMicNone } from "react-icons/md";
 import { PiWaveform } from "react-icons/pi";
 import { IoMdSend } from "react-icons/io";
 import axios from "axios";
-import {prod_model_be_url,dev_model_be_url} from "../../utils/config.js"
+import {prod_model_be_url} from "../../utils/config.js"
 import Loading from "../Loading/Loading.jsx";
 import ErrorMessage from './ErrorMessage.jsx';
 const ChatHome = () => {

@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from 'react'
-import ChatDesign from '../ChatDesign/ChatDesign';
-import ChatSent from '../ChatDesign/ChatSent';
-import ChatRecived from '../ChatDesign/ChatRecived';
+import React from 'react'
 import ChatHome from '../ChatDesign/ChatHome';
 
 const Home = () => {

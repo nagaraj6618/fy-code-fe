@@ -1,18 +1,8 @@
-// import React from 'react'
-
-// const Register = () => {
-//   return (
-//     <div>Register</div>
-//   )
-// }
-
-// export default Register
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 import LoadingFull from '../Loading/LoadingFull';
-import { showErrorToast, showInfoToast, showSuccessToast } from '../ToastMessage/ToastMessageComponent';
+import { showErrorToast, showInfoToast} from '../ToastMessage/ToastMessageComponent';
 import axios from 'axios';
 import { prod_be_url } from '../../utils/config';
 import { useAuth } from '../../Context/AuthContext';
