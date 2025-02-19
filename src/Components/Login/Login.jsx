@@ -1,56 +1,18 @@
-// import React, { useState } from 'react'
-// import { Link } from 'react-router-dom';
-// import { IoIosEye } from "react-icons/io";
-// import { IoIosEyeOff } from "react-icons/io";
-// const Login = () => {
-//   const [emailorusername,setemailorusername] = useState("");
-//   const [password,setPassword] = useState("");
-//   const handlePassword = (event) => {
-
-//   }
-//   const handleEmailOrUserName = (event) => {
-
-//   }
-//   const loginHandler = (event) => {
-//     event.prevantDefault();
-//   }
-//   return (
-//     <div>
-//       <form onSubmit={loginHandler}>
-//         <div>
-//           <div><label>Email/Username</label></div>
-//           <input type="text" />
-//         </div>
-//         <div>
-//           <div><label>Password</label></div>
-//           <input type="password" />
-//           <IoIosEye />
-//           <IoIosEyeOff/>
-//         </div>
-//         <div>
-//           <button type='submit'>Login</button>
-//         </div>
-//       </form>
-//       <div>
-//         <div>
-//           <p>New user? <Link to="/signup" >Register</Link></p>
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default Login
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IoIosEye, IoIosEyeOff } from 'react-icons/io';
 import LoadingFull from '../Loading/LoadingFull';
+import {prod_be_url} from "../../utils/config";
+import axios from 'axios';
+import { useAuth } from "../../Context/AuthContext";
+import {ToastNotifications,showErrorToast,showSuccessToast} from "../ToastMessage/ToastMessageComponent"
 
 const Login = () => {
+  const {login} = useAuth();
   const [emailOrUsername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const[isLoading,setIsLoading] = useState(false);
 
   const handleEmailOrUserName = (event) => {
     setEmailOrUsername(event.target.value);
@@ -64,14 +26,40 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  const loginHandler = (event) => {
+  const loginHandler = async(event) => {
     event.preventDefault();
+    setIsLoading(true)
+    // showErrorToast("Login failed.")
     console.log('Logging in with:', emailOrUsername, password);
+    try{
+      const response = await axios.post(`${prod_be_url}/auth/signin`,{
+        emailorusername:emailOrUsername,
+        password
+      })
+      const responseData = response.data;
+      console.log(responseData)
+      if(responseData?.success){
+        showSuccessToast("Login Successful")
+        localStorage.setItem("user",JSON.stringify(responseData?.data));
+        login();
+      }
+      setIsLoading(false);
+    }catch(error){
+      console.log("Error :",error)
+      if(error?.response?.data){
+        showErrorToast(error?.response?.data?.message);
+      }
+      else{
+        showErrorToast(error.message);
+      }
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-900">
-      {/* <LoadingFull/> */}
+      {isLoading && <LoadingFull/>}
+      <ToastNotifications/>
       <div className="bg-gray-800 bg-opacity-60 backdrop-blur-lg p-8 rounded-2xl shadow-lg w-96 text-white">
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
         <form onSubmit={loginHandler} className="space-y-4">

@@ -48,18 +48,18 @@ const NavbarComponent = ({ closeSidebar }) => {
     { id: '2', name: 'Another Long History Entry 2' },
     { id: '3', name: 'Short Name' },
     { id: '4', name: 'Yet Another Very Long History Name 4' },
-    { id: '1', name: 'Very Long History Name Example 1' },
-    { id: '2', name: 'Another Long History Entry 2' },
-    { id: '3', name: 'Short Name' },
-    { id: '4', name: 'Yet Another Very Long History Name 4' },
-    { id: '1', name: 'Very Long History Name Example 1' },
-    { id: '2', name: 'Another Long History Entry 2' },
-    { id: '3', name: 'Short Name' },
-    { id: '4', name: 'Yet Another Very Long History Name 4' },
-    { id: '1', name: 'Very Long History Name Example 1' },
-    { id: '2', name: 'Another Long History Entry 2' },
-    { id: '3', name: 'Short Name' },
-    { id: '4', name: 'Yet Another Very Long History Name 4' }
+    { id: '5', name: 'Very Long History Name Example 1' },
+    { id: '6', name: 'Another Long History Entry 2' },
+    { id: '7', name: 'Short Name' },
+    { id: '8', name: 'Yet Another Very Long History Name 4' },
+    { id: '9', name: 'Very Long History Name Example 1' },
+    { id: '10', name: 'Another Long History Entry 2' },
+    { id: '11', name: 'Short Name' },
+    { id: '12', name: 'Yet Another Very Long History Name 4' },
+    { id: '13', name: 'Very Long History Name Example 1' },
+    { id: '14', name: 'Another Long History Entry 2' },
+    { id: '15', name: 'Short Name' },
+    { id: '16', name: 'Yet Another Very Long History Name 4' }
   ];
 
   return (

@@ -3,14 +3,38 @@ import {Routes,Route} from "react-router-dom";
 import Home from "../Components/Home/Home";
 import Register from '../Components/Register/Register';
 import Login from "../Components/Login/Login";
+import PublicRoute from './PublicRoute';
+import About from '../Components/About/About';
+import Contact from '../Components/Contact/Contact';
+import PrivateRoute from './PrivateRoute';
+import OTPVerify from '../Components/OTP/OTPVerify';
+import PrivateOtpRoute from './PrivateOtpRoute';
+import {Navigate} from "react-router-dom"
+// import OTPRoute from './OTPRoute';
+// import OTPRoute from './OTPRoute';
 
 const AppRouter = () => {
   return (
     <Routes>
-      <Route path='/' element={<Home/>}/>
-      <Route path="/signin" element={<Login/>}/>
-      <Route path = "/signup" element = {<Register/>}/>
+      
+      <Route element={<PrivateRoute/>}>
+        <Route path='/chat/:id' element={<Home/>}/>
+        <Route path='/' element={<Home/>}/>
+        
+      </Route>
+      <Route element={<PublicRoute/>}>
+        <Route path="/signin" element={<Login/>}/>
+        <Route path = "/signup" element = {<Register/>}/>
+        <Route path="/about" element={<About/>}/>
+        <Route path = "/contact" element = {<Contact/>}/>
+        
+      </Route>
+      <Route element={<PrivateOtpRoute/>}>
+        <Route path = "/otp" element={<OTPVerify/>} />
+      </Route>
+      <Route path="*" element={<Navigate to="/chat/new" replace />} />
     </Routes>
+
   )
 }
 
