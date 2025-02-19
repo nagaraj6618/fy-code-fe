@@ -55,7 +55,7 @@ const OTPVerify = () => {
  
        setTimeout(() => {
          showSuccessToast("Login Successful...");
-         navigate("/chat/new", { replace: true });
+         // navigate("/chat/new", { replace: true });
        }, 500);
  
      } else {

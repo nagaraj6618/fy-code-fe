@@ -8,7 +8,7 @@ const PublicRoute = () => {
     return <Navigate to="/otp" />;
   }
 
-  return isAuthenticated ? <Navigate to="/" /> : <Outlet />;
+  return isAuthenticated ? <Navigate to="/chat/new" /> : <Outlet />;
 };
 
 export default PublicRoute;

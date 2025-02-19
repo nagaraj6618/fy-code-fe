@@ -19,7 +19,6 @@ const AppRouter = () => {
       
       <Route element={<PrivateRoute/>}>
         <Route path='/chat/:id' element={<Home/>}/>
-        <Route path='/' element={<Home/>}/>
         
       </Route>
       <Route element={<PublicRoute/>}>
@@ -27,11 +26,13 @@ const AppRouter = () => {
         <Route path = "/signup" element = {<Register/>}/>
         <Route path="/about" element={<About/>}/>
         <Route path = "/contact" element = {<Contact/>}/>
+        <Route path='/' element={<Home/>}/>
         
       </Route>
       <Route element={<PrivateOtpRoute/>}>
         <Route path = "/otp" element={<OTPVerify/>} />
       </Route>
+      
       <Route path="*" element={<Navigate to="/chat/new" replace />} />
     </Routes>
 

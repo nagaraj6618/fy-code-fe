@@ -4,7 +4,7 @@ import { useAuth } from "../Context/AuthContext";
 
 const PrivateOtpRoute = () => {
    const { isOtpRequired } = useAuth();
-   return isOtpRequired ? <Outlet /> : <Navigate to="/otp" />;
+   return isOtpRequired ? <Outlet /> : <Navigate to="/" />;
 }
 
 export default PrivateOtpRoute
