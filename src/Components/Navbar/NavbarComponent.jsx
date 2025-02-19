@@ -1,48 +1,12 @@
-// import React from 'react'
-// import { Link } from 'react-router-dom'
-
-// const NavbarComponent = ({closeSidebar}) => {
-//   const historyData = [
-//     {
-//       id:"1",
-//       name : "History 1"
-//     },
-//     {
-//       id:"2",
-//       name : "History 2"
-//     },
-//     {
-//       id:"3",
-//       name : "History 3"
-//     }
-//   ]
-//   return (
-//     <div>
-//       <div>
-//         {/* Here Chat History*/}
-//         {historyData.map((data,index) => (
-//           <div key={index} onClick={closeSidebar}><Link to={`/chat/${data.id}`} >{data.name}</Link></div>
-//         ) ) }
-//       </div>
-//       <div>
-//         <ul onClick={closeSidebar}>
-//           <li><Link to="/signin" >Login</Link></li>
-//           <li><Link to="/signup" >Register</Link></li>
-//           <li><Link to="/about" >About</Link></li>
-//           <li><Link to="/contact" >Contact</Link></li>
-//         </ul>
-//       </div>
-//     </div>
-//   )
-// }
-
-// export default NavbarComponent
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaHistory, FaSignInAlt, FaUserPlus, FaInfoCircle, FaEnvelope } from 'react-icons/fa';
+import { useAuth } from '../../Context/AuthContext';
+import { CiLogout } from "react-icons/ci";
+import { RiAccountPinCircleFill } from "react-icons/ri";
 
 const NavbarComponent = ({ closeSidebar }) => {
+  const {logout,isAuthenticated} = useAuth();
   const historyData = [
     { id: '1', name: 'Very Long History Name Example 1' },
     { id: '2', name: 'Another Long History Entry 2' },
@@ -62,6 +26,10 @@ const NavbarComponent = ({ closeSidebar }) => {
     { id: '16', name: 'Yet Another Very Long History Name 4' }
   ];
 
+  const handleLogout = () => {
+    logout();
+    closeSidebar();
+  }
   return (
     <nav className="flex flex-col h-full w-full text-white">
     {/* Chat History Section */}
@@ -86,7 +54,7 @@ const NavbarComponent = ({ closeSidebar }) => {
     <div className="mt-auto">
       <h2 className="text-lg md:text-base sm:text-sm font-semibold mb-2 border-b border-gray-700 pb-2">Navigation</h2>
       <ul className="space-y-2">
-        <li>
+        {!isAuthenticated ?(<><li>
           <Link 
             to="/signin" 
             className="flex items-center gap-2 p-2 rounded-md transition hover:bg-gray-700 text-base md:text-sm sm:text-xs"
@@ -104,6 +72,28 @@ const NavbarComponent = ({ closeSidebar }) => {
             <FaUserPlus /> Register
           </Link>
         </li>
+        </>) : 
+        (
+          <>
+            <li>
+              <Link to = "/signin"
+                className="flex items-center gap-2 p-2 rounded-md transition hover:bg-gray-700 text-base md:text-sm sm:text-xs"
+                onClick={handleLogout}
+              >
+                <CiLogout /> Logout
+              </Link>
+             </li>
+             <li>
+              <Link to = "/account"
+                className="flex items-center gap-2 p-2 rounded-md transition hover:bg-gray-700 text-base md:text-sm sm:text-xs"
+                onClick={closeSidebar}
+              >
+                <RiAccountPinCircleFill /> Account
+              </Link>
+             </li>
+          </>
+        )
+        }
         <li>
           <Link 
             to="/about" 

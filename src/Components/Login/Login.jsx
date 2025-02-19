@@ -5,7 +5,7 @@ import LoadingFull from '../Loading/LoadingFull';
 import {prod_be_url} from "../../utils/config";
 import axios from 'axios';
 import { useAuth } from "../../Context/AuthContext";
-import {ToastNotifications,showErrorToast,showSuccessToast} from "../ToastMessage/ToastMessageComponent"
+import {showErrorToast,showInfoToast,showSuccessToast} from "../ToastMessage/ToastMessageComponent"
 
 const Login = () => {
   const {login} = useAuth();
@@ -39,7 +39,7 @@ const Login = () => {
       const responseData = response.data;
       console.log(responseData)
       if(responseData?.success){
-        showSuccessToast("Login Successful")
+        showInfoToast("Please Complete the TFA.");
         localStorage.setItem("user",JSON.stringify(responseData?.data));
         login();
       }
@@ -59,7 +59,6 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center h-screen bg-gray-900">
       {isLoading && <LoadingFull/>}
-      <ToastNotifications/>
       <div className="bg-gray-800 bg-opacity-60 backdrop-blur-lg p-8 rounded-2xl shadow-lg w-96 text-white">
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
         <form onSubmit={loginHandler} className="space-y-4">

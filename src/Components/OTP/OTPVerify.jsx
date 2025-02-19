@@ -2,7 +2,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { prod_be_url } from '../../utils/config';
-import { showErrorToast, showSuccessToast, ToastNotifications } from '../ToastMessage/ToastMessageComponent';
+import { showErrorToast, showSuccessToast, } from '../ToastMessage/ToastMessageComponent';
 import {useAuth} from "../../Context/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import LoadingFull from '../Loading/LoadingFull';
@@ -76,7 +76,7 @@ const OTPVerify = () => {
  
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white">
-      <ToastNotifications/>
+
       {
          isLoading && <LoadingFull/>
       }

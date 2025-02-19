@@ -10,6 +10,7 @@ import PrivateRoute from './PrivateRoute';
 import OTPVerify from '../Components/OTP/OTPVerify';
 import PrivateOtpRoute from './PrivateOtpRoute';
 import {Navigate} from "react-router-dom"
+import Account from '../Components/Account/Account';
 // import OTPRoute from './OTPRoute';
 // import OTPRoute from './OTPRoute';
 
@@ -24,15 +25,16 @@ const AppRouter = () => {
       <Route element={<PublicRoute/>}>
         <Route path="/signin" element={<Login/>}/>
         <Route path = "/signup" element = {<Register/>}/>
-        <Route path="/about" element={<About/>}/>
-        <Route path = "/contact" element = {<Contact/>}/>
+        
         <Route path='/' element={<Home/>}/>
         
       </Route>
       <Route element={<PrivateOtpRoute/>}>
         <Route path = "/otp" element={<OTPVerify/>} />
       </Route>
-      
+      <Route path="/about" element={<About/>}/>
+      <Route path = "/contact" element = {<Contact/>}/>
+      <Route path='/account' element = {<Account/>} />
       <Route path="*" element={<Navigate to="/chat/new" replace />} />
     </Routes>
 
