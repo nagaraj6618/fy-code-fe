@@ -81,3 +81,8 @@ html, body {
 .animate-fade-ins {
   animation: fadeIns 0.5s ease-in-out;
 }
+/* Hide Edge's default eye icon */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+  display: none;
+}
