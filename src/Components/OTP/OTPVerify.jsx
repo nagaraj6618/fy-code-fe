@@ -29,10 +29,25 @@ const OTPVerify = () => {
     setOtp(value);
   };
 
-  const handleResend = () => {
+  const handleResend = async() => {
     setOtp('');
     setTimer(120);
     setIsResendDisabled(true);
+    try{
+      const user = JSON.parse(localStorage.getItem("user")||"null");
+      console.log(user);
+      const response = await axios.post(`${prod_be_url}/auth/resend-otp`,{
+        email:user?.email,
+      })
+      console.log(response.data);
+
+    }catch(error){
+      if (error?.response?.data) {
+        showErrorToast(error?.response?.data?.message);
+      }else{
+       showErrorToast(error.message);
+      }
+    }
   };
   const handleOtpSubmit = async () => {
    setIsLoading(true);

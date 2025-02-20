@@ -92,7 +92,7 @@ const ChatHome = () => {
     // Handle sending messages
     const handleSend = async(event) => {
         event.preventDefault();
-        const data_id = data.length || 1;
+        const data_id = data.length;
         try{
             if (message.trim()) {
                 setData((prevData) => [
@@ -107,7 +107,7 @@ const ChatHome = () => {
             if(!isAuthenticated){
                 if(data.length < 5){
                     const response = await axios.post(`${prod_model_be_url}/calculate_score`,{
-                        message
+                        text:message
                     })
                     console.log(response.data);
                     setData((prevData) => 
