@@ -11,6 +11,7 @@ import OTPVerify from '../Components/OTP/OTPVerify';
 import PrivateOtpRoute from './PrivateOtpRoute';
 import {Navigate} from "react-router-dom"
 import Account from '../Components/Account/Account';
+import ForgotPassword from '../Components/ForgotPassword/ForgotPassword';
 // import OTPRoute from './OTPRoute';
 // import OTPRoute from './OTPRoute';
 
@@ -25,6 +26,7 @@ const AppRouter = () => {
       <Route element={<PublicRoute/>}>
         <Route path="/signin" element={<Login/>}/>
         <Route path = "/signup" element = {<Register/>}/>
+        <Route path = "/forgot-password" element = {<ForgotPassword/>} />
         
         <Route path='/' element={<Home/>}/>
         
