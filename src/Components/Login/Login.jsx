@@ -91,6 +91,11 @@ const Login = () => {
                 {showPassword ? <IoIosEyeOff /> : <IoIosEye />}
               </span>
             </div>
+            <div className="text-right mt-1">
+          <Link to="/forgot-password" className="text-blue-400 hover:underline text-sm">
+            Forgot Password?
+          </Link>
+        </div>
           </div>
           <button 
             type="submit" 
@@ -99,7 +104,7 @@ const Login = () => {
             Login
           </button>
         </form>
-        <div className="text-center mt-4">
+        <div className="text-center mt-4 text-sm">
           <p className="text-gray-300">New user? <Link to="/signup" className="text-blue-400 hover:underline">Register</Link></p>
         </div>
       </div>
