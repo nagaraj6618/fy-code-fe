@@ -39,11 +39,12 @@ const NavbarComponent = ({ closeSidebar }) => {
   Chat History
   {isAuthenticated && (
     <Link
+    onClick = {closeSidebar}
       to="/chat/new"
       className="relative group p-2 rounded transition hover:bg-gray-700"
     >
       <PiNotePencilDuotone className="w-5 h-5" />
-      <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 px-2 py-1 text-xs text-white rounded opacity-0 group-hover:opacity-80 transition-opacity">
+      <span  className="absolute left-1/2 -translate-x-1/2 top-full mt-1 px-2 py-1 text-xs text-white rounded opacity-0 group-hover:opacity-80 transition-opacity">
         New Chat
       </span>
     </Link>

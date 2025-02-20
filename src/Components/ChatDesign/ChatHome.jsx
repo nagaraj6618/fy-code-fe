@@ -11,11 +11,12 @@ import ErrorMessage from './ErrorMessage.jsx';
 import { showErrorToast } from '../ToastMessage/ToastMessageComponent.jsx';
 import { useAuth } from '../../Context/AuthContext.js';
 import { useParams } from "react-router-dom";
-
+import { useNavigate } from 'react-router-dom';
 
 const ChatHome = () => {
+    const navigate = useNavigate();
     const {id} = useParams();
-    const {setChatHistory,setChatHistoryData} = useAuth();
+    const {setChatHistory,setChatHistoryData,isAuthenticated} = useAuth();
     const [data, setData] = useState([
     ]);
     const [isLoading ,setIsLoading] = useState(false);
@@ -103,6 +104,24 @@ const ChatHome = () => {
                 setIsLoading(true);
                 setIsError(false);
             const token = localStorage.getItem("token") || ""
+            if(!isAuthenticated){
+                if(data.length < 5){
+                    const response = await axios.post(`${prod_model_be_url}/calculate_score`,{
+                        message
+                    })
+                    console.log(response.data);
+                    setData((prevData) => 
+                        prevData.map((item) => 
+                        item.id === data_id ? { ...item, response: response.data } : item
+                        )
+                    );
+                    setIsLoading(false)
+                    return
+                }
+                showErrorToast("Please Login to contiue!")
+                setIsLoading(false)
+                return
+            }
             const response = await axios.post(`${prod_be_url}/grammar-chat-data`,
                 {
                     message,
@@ -117,7 +136,10 @@ const ChatHome = () => {
                 item.id === data_id ? { ...item, response: response.data.data } : item
                 )
             );
+            console.log(response.data)
             setIsLoading(false)
+            navigate(`/chat/${response?.data?.data?.chatHistoryId}`);
+            chatHistoryApi();
             }
         }
         catch(err){
@@ -226,7 +248,7 @@ const ChatHome = () => {
                         className="w-4/5 p-3 border border-gray-600 rounded-full text-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="Type your message..."
                         value={message}
-                        onChange={(e) => setMessage(e.target.value)}
+                        onChange={(e) =>{ setMessage(e.target.value);  setIsError(false);}}
                     />
                     <button
                         type="submit"

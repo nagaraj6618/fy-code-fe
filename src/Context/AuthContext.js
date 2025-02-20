@@ -41,8 +41,11 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("auth");
     localStorage.removeItem("otpRequired");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setIsAuthenticated(false);
     setIsOtpRequired(false);
+    setChatHistory([])
   };
 
   const setChatHistoryData = (data) => {
