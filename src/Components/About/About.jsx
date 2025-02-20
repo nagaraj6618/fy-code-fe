@@ -11,9 +11,9 @@ const teamMembers = [
   { name: "Nagaraj S", email: "nagaraj516700@gmail.com", image: image1, website: "https://example.com" },
   { name: "Anitha P", email: "anitha@example.com", image: "", website: "https://example.com" },
   { name: "Harsha", email: "harsha@example.com", image: "https://via.placeholder.com/100", website: "https://example.com" },
-  { name: "Rahul K", email: "rahul@example.com", image: "https://via.placeholder.com/100", website: "https://example.com" },
-  { name: "Priya M", email: "priya@example.com", image: "https://via.placeholder.com/100", website: "https://example.com" },
-  { name: "Vikram T", email: "vikram@example.com", image: "https://via.placeholder.com/100", website: "https://example.com" }
+  { name: "Person 4", email: "Person4@example.com", image: "https://via.placeholder.com/100", website: "https://example.com" },
+  { name: "Person 5", email: "Person4@example.com", image: "https://via.placeholder.com/100", website: "https://example.com" },
+  { name: "Person 6", email: "Person4@example.com", image: "https://via.placeholder.com/100", website: "https://example.com" }
 ];
 
 const About = () => {
@@ -66,8 +66,8 @@ const About = () => {
               {teamMembers.map((member, index) => (
                 <div key={index} className="bg-gray-700 p-4 rounded-lg shadow-md text-center">
                   <img src={member.image} alt={member.name} className="w-24 h-24 object-cover rounded-full mx-auto mb-2" />
-                  <p className="text-sm font-semibold">{member.name}</p>
-                  <p className="text-xs text-gray-400">{member.email}</p>
+                  <p className="text-sm font-semibold break-words">{member.name}</p>
+                  <p className="text-xs text-gray-400 break-words">{member.email}</p>
                   {/* <a href={member.website} target="_blank" rel="noopener noreferrer" className="text-blue-400 text-xs hover:underline">Website</a> */}
                 </div>
               ))}
