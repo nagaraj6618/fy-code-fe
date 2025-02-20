@@ -18,7 +18,7 @@ const AppLayout = () => {
   return (
     <div className="flex h-screen bg-gray-900">
       {/* Sidebar for larger screens with glass effect */}
-      <div className={`absolute top-0 left-0 w-48 md:w-1/5 h-full transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 bg-gray-800 bg-opacity-60 backdrop-blur-lg text-white p-4 transition-transform duration-300 ease-in-out z-50 shadow-lg`}>
+      <div className={`absolute top-0 left-0 w-48 md:w-1/4 h-full transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:relative md:translate-x-0 bg-gray-800 bg-opacity-60 backdrop-blur-lg text-white p-4 transition-transform duration-300 ease-in-out z-50 shadow-lg`}>
               <NavbarComponent closeSidebar={closeSidebar} />
       </div>
 

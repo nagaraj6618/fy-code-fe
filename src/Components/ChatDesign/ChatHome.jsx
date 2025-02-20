@@ -189,13 +189,7 @@ const ChatHome = () => {
             // setIsLoading(false);
           }
     }
-    const chatStoreApi = async(chatData) => {
-        try{
 
-        }catch(error){
-
-        }
-    }
     const getChatDataBsedOnHistory = async() => {
         try{
             const token = localStorage.getItem("token") || "";
@@ -215,7 +209,12 @@ const ChatHome = () => {
             console.log(chatDatas);
             setData(chatDatas)
         }catch(error){
-
+            if(error?.response?.data){
+                showErrorToast(error?.response?.data?.message);
+              }
+              else{
+                showErrorToast(error.message);
+              }
         }
     }
     return (
@@ -245,20 +244,20 @@ const ChatHome = () => {
                 <div className="flex items-center  p-2 mt-auto mb-1">
                     <input
                         type="text"
-                        className="w-4/5 p-3 border border-gray-600 rounded-full text-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-4/5 p-2 border border-gray-600 rounded-full text-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="Type your message..."
                         value={message}
                         onChange={(e) =>{ setMessage(e.target.value);  setIsError(false);}}
                     />
                     <button
                         type="submit"
-                        className="ml-4 p-3 bg-green-500 text-white rounded-full hover:bg-green-600 transition-all duration-300 ease-in-out"
+                        className="ml-5 p-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition-all duration-300 ease-in-out"
                     >
                         <IoMdSend />
                     </button>
                     <button
                         onClick={toggleRecording}
-                        className={`ml-4 p-3 rounded-full ${isRecording ? "bg-red-500" : "bg-gray-200 text-black"} hover:bg-opacity-80 transition-all duration-300 ease-in-out`}
+                        className={`ml-3 p-2 rounded-full ${isRecording ? "bg-red-500" : "bg-gray-200 text-black"} hover:bg-opacity-80 transition-all duration-300 ease-in-out`}
                     >
                         {isRecording ? <PiWaveform /> : <MdOutlineMicNone />}
                     </button>
