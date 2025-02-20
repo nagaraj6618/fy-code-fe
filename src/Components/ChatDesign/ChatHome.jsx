@@ -5,16 +5,18 @@ import { MdOutlineMicNone } from "react-icons/md";
 import { PiWaveform } from "react-icons/pi";
 import { IoMdSend } from "react-icons/io";
 import axios from "axios";
-import {prod_model_be_url} from "../../utils/config.js"
+import {prod_be_url, prod_model_be_url} from "../../utils/config.js"
 import Loading from "../Loading/Loading.jsx";
 import ErrorMessage from './ErrorMessage.jsx';
+import { showErrorToast } from '../ToastMessage/ToastMessageComponent.jsx';
+import { useAuth } from '../../Context/AuthContext.js';
+import { useParams } from "react-router-dom";
+
+
 const ChatHome = () => {
+    const {id} = useParams();
+    const {setChatHistory,setChatHistoryData} = useAuth();
     const [data, setData] = useState([
-        { request: "Hi there! How are you?", response: {
-         score: "100",
-         suggest: "Everything is perfect",
-         id:1
-        } },
     ]);
     const [isLoading ,setIsLoading] = useState(false);
     const [isError,setIsError] = useState(false);
@@ -89,35 +91,36 @@ const ChatHome = () => {
     // Handle sending messages
     const handleSend = async(event) => {
         event.preventDefault();
-        const id = data.length || 1;
+        const data_id = data.length || 1;
         try{
             if (message.trim()) {
                 setData((prevData) => [
                     ...prevData,
-                    { request: message,response:{},id:id}
+                    { request: message,response:{},id:data_id}
                 ]);
                 console.log("Message sent:", message);
                 setMessage("");
                 setIsLoading(true);
                 setIsError(false);
-                const model_be_url =  `${prod_model_be_url}/calculate_score` 
-                console.log("URL: ",model_be_url)
-                // const response =  await axios.get(model_be_url);
-                const response =  await axios.post(model_be_url,{
-                   text : message
-                });
-                setIsLoading(false)
-                setData((prevData) => 
-                   prevData.map((item) => 
-                       item.id === id ? { ...item, response: response.data } : item
-                   )
-               );
-                console.log(response.data);
-    
+            const token = localStorage.getItem("token") || ""
+            const response = await axios.post(`${prod_be_url}/grammar-chat-data`,
+                {
+                    message,
+                    chatHistoryId: id,
+                },{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            setData((prevData) => 
+                prevData.map((item) => 
+                item.id === data_id ? { ...item, response: response.data.data } : item
+                )
+            );
+            setIsLoading(false)
             }
         }
         catch(err){
-            console.log("Error");
             setIsLoading(false);
             setIsError(true);
         }
@@ -132,6 +135,67 @@ const ChatHome = () => {
         }
     }, [data]);
 
+    //Api Call for chat history
+    useEffect(() => {
+        chatHistoryApi();
+        getChatDataBsedOnHistory();
+    },[])
+    useEffect(() => {
+        getChatDataBsedOnHistory();
+    },[id])
+
+    const chatHistoryApi = async() => {
+        try{
+            const token = localStorage.getItem("token") || "";
+            const response = await axios.get(`${prod_be_url}/grammar-chat-history`,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            console.log(response.data);
+            setChatHistoryData(response?.data?.data);
+            setChatHistory(response?.data?.data);
+
+        }catch(error){
+            console.log("Error :",error)
+            if(error?.response?.data){
+              showErrorToast(error?.response?.data?.message);
+            }
+            else{
+              showErrorToast(error.message);
+            }
+            // setIsLoading(false);
+          }
+    }
+    const chatStoreApi = async(chatData) => {
+        try{
+
+        }catch(error){
+
+        }
+    }
+    const getChatDataBsedOnHistory = async() => {
+        try{
+            const token = localStorage.getItem("token") || "";
+            const chatId = id || ""
+            console.log(chatId);
+            const response = await axios.get(`${prod_be_url}/grammar-chat-data/${chatId}`,{
+                headers:{
+                    Authorization:`Bearer ${token}`
+                }
+            });
+            console.log(response.data);
+            let chatDatas = response.data.data;
+            chatDatas = chatDatas.map((data ,index)=> ({
+                ...data,
+                id:index
+            }));
+            console.log(chatDatas);
+            setData(chatDatas)
+        }catch(error){
+
+        }
+    }
     return (
         <div className="flex flex-col h-full bg-gray-900 text-white">
             {/* Chat content */}

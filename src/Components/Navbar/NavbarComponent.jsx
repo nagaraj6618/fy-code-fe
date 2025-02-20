@@ -4,9 +4,10 @@ import { FaHistory, FaSignInAlt, FaUserPlus, FaInfoCircle, FaEnvelope } from 're
 import { useAuth } from '../../Context/AuthContext';
 import { CiLogout } from "react-icons/ci";
 import { RiAccountPinCircleFill } from "react-icons/ri";
+import { PiNotePencilDuotone } from "react-icons/pi";
 
 const NavbarComponent = ({ closeSidebar }) => {
-  const {logout,isAuthenticated} = useAuth();
+  const {logout,isAuthenticated,chatHistory} = useAuth();
   const historyData = [
     { id: '1', name: 'Very Long History Name Example 1' },
     { id: '2', name: 'Another Long History Entry 2' },
@@ -34,16 +35,31 @@ const NavbarComponent = ({ closeSidebar }) => {
     <nav className="flex flex-col h-full w-full text-white">
     {/* Chat History Section */}
     <div className="flex-1 overflow-y-auto">
-      <h2 className="text-lg md:text-base sm:text-sm font-semibold mb-2 border-b border-gray-700 pb-2">Chat History</h2>
+      <h2 className="flex items-center justify-between text-lg md:text-base sm:text-sm font-semibold mb-2 border-b border-gray-700 pb-2">
+  Chat History
+  {isAuthenticated && (
+    <Link
+      to="/chat/new"
+      className="relative group p-2 rounded transition hover:bg-gray-700"
+    >
+      <PiNotePencilDuotone className="w-5 h-5" />
+      <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1 px-2 py-1 text-xs text-white rounded opacity-0 group-hover:opacity-80 transition-opacity">
+        New Chat
+      </span>
+    </Link>
+  )}
+</h2>
       <ul>
-        {historyData.map((data) => (
-          <li key={data.id} className="mb-2">
+        {chatHistory.map((data) => (
+          <li key={data._id} className="mb-2">
+            
             <Link 
-              to={`/chat/${data.id}`} 
+              to={`/chat/${data._id}`} 
               className="flex items-center gap-2 p-2 rounded-md transition hover:bg-gray-700 truncate w-full text-base md:text-sm sm:text-xs"
               onClick={closeSidebar}
             >
-              <FaHistory /> <span className="truncate max-w-[150px] block">{data.name}</span>
+              <FaHistory /> <span className="truncate max-w-[150px] block">{data.chatHistoryName}
+              </span>
             </Link>
           </li>
         ))}

@@ -8,12 +8,14 @@ export const AuthProvider = ({ children }) => {
   const [isOtpRequired, setIsOtpRequired] = useState(
     localStorage.getItem("otpRequired") === "true"
   );
+  const [chatHistory,setChatHistory] = useState([]);
 
   useEffect(() => {
     const handleStorageChange = () => {
       setIsAuthenticated(localStorage.getItem("auth") === "true");
       setIsOtpRequired(localStorage.getItem("otpRequired") === "true");
     };
+    // setChatHistory([])
 
     window.addEventListener("storage", handleStorageChange);
     return () => window.removeEventListener("storage", handleStorageChange);
@@ -43,8 +45,12 @@ export const AuthProvider = ({ children }) => {
     setIsOtpRequired(false);
   };
 
+  const setChatHistoryData = (data) => {
+    console.log(data)
+  }
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isOtpRequired, login, register, verifyOtp, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, isOtpRequired, login, register, verifyOtp, logout, chatHistory,setChatHistoryData,setChatHistory }}>
       {children}
     </AuthContext.Provider>
   );
