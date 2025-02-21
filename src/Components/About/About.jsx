@@ -4,6 +4,7 @@ import beulah from "../../assest/images/Beulah.jpg";
 import Joshua from "../../assest/images/Joshua.jpg";
 import harsha from "../../assest/images/harsha.jpg";
 import zafreen from "../../assest/images/Zafreen.jpg";
+import { IoCloseCircleOutline } from "react-icons/io5";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -68,12 +69,13 @@ const About = () => {
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 p-6 overflow-auto z-50" onClick={() => setShowPopup(false)}>
           <motion.div 
-            className="p-6 bg-gray-800 rounded-lg shadow-lg max-w-lg text-center"
+            className="p-6 bg-gray-800 rounded-lg shadow-lg max-w-lg text-center relative"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
             onClick={(e) => e.stopPropagation()}
           >
+            <IoCloseCircleOutline className="absolute top-2 right-2 text-white text-3xl font-extrabold" onClick={() => setShowPopup(false)} />
             <h2 className="text-xl font-semibold text-blue-400 mb-4">Developed By</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 ">
               {teamMembers.map((member, index) => (
@@ -105,7 +107,8 @@ const About = () => {
           exit="exit"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="max-w-4xl p-4">
+          <div className="max-w-4xl p-4 relative">
+            <IoCloseCircleOutline className="absolute  right-9 top-6 text-white font-extrabold text-3xl" onClick={() => setSelectedImage(null)}/>
             <img src={selectedImage} alt="Full View" className="w-full h-auto max-h-[60vh] rounded-lg shadow-lg" />
           </div>
         </motion.div>
@@ -114,3 +117,4 @@ const About = () => {
   );
 };
 export default About;
+
