@@ -1,4 +1,9 @@
-import image1 from "../../assest/images/image-1.jpg"
+import image1 from "../../assest/images/image-1.jpg";
+import anithaImage from "../../assest/images/anitha.png";
+import beulah from "../../assest/images/Beulah.jpg";
+import Joshua from "../../assest/images/Joshua.jpg";
+import harsha from "../../assest/images/harsha.jpg";
+import zafreen from "../../assest/images/Zafreen.jpg";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -7,17 +12,24 @@ const textVariants = {
   visible: (i) => ({ opacity: 1, y: 0, transition: { delay: i * 0.3 } }),
 };
 
+const imagePopupVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } },
+  exit: { opacity: 0, scale: 0.8, transition: { duration: 0.3 } }
+};
+
 const teamMembers = [
-  { name: "Nagaraj S", email: "nagaraj516700@gmail.com", image: image1, website: "https://example.com" },
-  { name: "Anitha P", email: "anitha@example.com", image: "", website: "https://example.com" },
-  { name: "Harsha", email: "harsha@example.com", image: "https://via.placeholder.com/100", website: "https://example.com" },
-  { name: "Person 4", email: "Person4@example.com", image: "https://via.placeholder.com/100", website: "https://example.com" },
-  { name: "Person 5", email: "Person4@example.com", image: "https://via.placeholder.com/100", website: "https://example.com" },
-  { name: "Person 6", email: "Person4@example.com", image: "https://via.placeholder.com/100", website: "https://example.com" }
+  { name: "Nagaraj S", email: "nagaraj516700@gmail.com", image: image1 },
+  { name: "Anitha P", email: "anithapalani2004april@gmail.com", image: anithaImage },
+  { name: "Harsha", email: "harshavardhini332004@gmail.com", image: harsha },
+  { name: "Beulah", email: "joycbeulah7@gmail.com", image: beulah },
+  { name: "Zafreen J", email: "zafreen9944@gmail.com", image: zafreen },
+  { name: "Joshua Clement D", email: "joshuaclement251106@gmail.com", image: Joshua }
 ];
 
 const About = () => {
   const [showPopup, setShowPopup] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white p-6 overflow-y-auto">
@@ -54,26 +66,49 @@ const About = () => {
         Project Developed By
       </button>
       {showPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 p-6 overflow-auto" onClick={() => setShowPopup(false)}>
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 p-6 overflow-auto z-50" onClick={() => setShowPopup(false)}>
           <motion.div 
             className="p-6 bg-gray-800 rounded-lg shadow-lg max-w-lg text-center"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
+            onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-xl font-semibold text-blue-400 mb-4">Developed By</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 ">
               {teamMembers.map((member, index) => (
                 <div key={index} className="bg-gray-700 p-4 rounded-lg shadow-md text-center">
-                  <img src={member.image} alt={member.name} className="w-24 h-24 object-cover rounded-full mx-auto mb-2" />
+                  <img 
+                    src={member.image} 
+                    alt={member.name} 
+                    className="w-24 h-24 object-cover rounded-full mx-auto mb-2 cursor-pointer" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedImage(member.image);
+                    }}
+                  />
                   <p className="text-sm font-semibold break-words">{member.name}</p>
                   <p className="text-xs text-gray-400 break-words">{member.email}</p>
-                  {/* <a href={member.website} target="_blank" rel="noopener noreferrer" className="text-blue-400 text-xs hover:underline">Website</a> */}
                 </div>
               ))}
             </div>
           </motion.div>
         </div>
+      )}
+      {/* Full Image View Popup with Animation */}
+      {selectedImage && (
+        <motion.div 
+          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50"
+          variants={imagePopupVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          onClick={() => setSelectedImage(null)}
+        >
+          <div className="max-w-4xl p-4">
+            <img src={selectedImage} alt="Full View" className="w-full h-auto max-h-[60vh] rounded-lg shadow-lg" />
+          </div>
+        </motion.div>
       )}
     </div>
   );
