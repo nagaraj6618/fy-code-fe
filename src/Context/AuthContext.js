@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   const verifyOtp = () => {
     localStorage.setItem("auth", "true");
+    localStorage.setItem("sessionStartTime", Date.now().toString());
     localStorage.removeItem("otpRequired");
     setIsAuthenticated(true);
     setIsOtpRequired(false);
@@ -43,6 +44,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("otpRequired");
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("sessionStartTime");
     setIsAuthenticated(false);
     setIsOtpRequired(false);
     setChatHistory([])
