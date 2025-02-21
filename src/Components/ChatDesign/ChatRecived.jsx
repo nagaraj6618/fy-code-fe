@@ -1,4 +1,5 @@
 import React from "react";
+import TextToSpeech from "../TextToSpeech/TextToSpeech";
 
 const ChatRecived = ({ message, score, suggestion }) => {
   return (
@@ -10,6 +11,7 @@ const ChatRecived = ({ message, score, suggestion }) => {
         <p className="text-gray-900 text-base">
           <span className="font-semibold text-green-700">Suggestion:</span> {suggestion}
         </p>
+        <TextToSpeech text={`You have scored ${score} and ${suggestion?`I give suggesstion to change this : ${suggestion}`:"Good to go."}`}/>
       </div>
     </div>
   );
