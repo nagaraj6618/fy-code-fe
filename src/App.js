@@ -53,12 +53,6 @@ function App() {
   
       }catch(error){
           console.log("Error :",error)
-          if(error?.response?.data){
-            showErrorToast(error?.response?.data?.message);
-          }
-          else{
-            showErrorToast(error.message);
-          }
         }
   }
 

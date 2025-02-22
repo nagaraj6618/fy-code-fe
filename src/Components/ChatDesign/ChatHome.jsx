@@ -180,12 +180,6 @@ const ChatHome = () => {
 
         }catch(error){
             console.log("Error :",error)
-            if(error?.response?.data){
-              showErrorToast(error?.response?.data?.message);
-            }
-            else{
-              showErrorToast(error.message);
-            }
             // setIsLoading(false);
           }
     }
@@ -209,12 +203,7 @@ const ChatHome = () => {
             console.log(chatDatas);
             setData(chatDatas)
         }catch(error){
-            if(error?.response?.data){
-                showErrorToast(error?.response?.data?.message);
-              }
-              else{
-                showErrorToast(error.message);
-              }
+            console.log("error",error.message);
         }
     }
     return (
