@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom';
 const ChatHome = () => {
     const navigate = useNavigate();
     const {id} = useParams();
-    const {setChatHistory,setChatHistoryData,isAuthenticated} = useAuth();
+    const {setChatHistory,isAuthenticated} = useAuth();
     const [data, setData] = useState([
     ]);
     const [isLoading ,setIsLoading] = useState(false);
@@ -175,7 +175,7 @@ const ChatHome = () => {
                 }
             })
             console.log(response.data);
-            setChatHistoryData(response?.data?.data);
+            // setChatHistoryData(response?.data?.data);
             setChatHistory(response?.data?.data);
 
         }catch(error){

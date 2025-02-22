@@ -45,6 +45,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     localStorage.removeItem("sessionStartTime");
+    localStorage.removeItem("userData");
     setIsAuthenticated(false);
     setIsOtpRequired(false);
     setChatHistory([])

@@ -12,16 +12,13 @@ import PrivateOtpRoute from './PrivateOtpRoute';
 import {Navigate} from "react-router-dom"
 import Account from '../Components/Account/Account';
 import ForgotPassword from '../Components/ForgotPassword/ForgotPassword';
-// import OTPRoute from './OTPRoute';
-// import OTPRoute from './OTPRoute';
-
 const AppRouter = () => {
   return (
     <Routes>
       
       <Route element={<PrivateRoute/>}>
         <Route path='/chat/:id' element={<Home/>}/>
-        
+        <Route path='/account' element = {<Account/>} />
       </Route>
       <Route element={<PublicRoute/>}>
         <Route path="/signin" element={<Login/>}/>
@@ -36,7 +33,6 @@ const AppRouter = () => {
       </Route>
       <Route path="/about" element={<About/>}/>
       <Route path = "/contact" element = {<Contact/>}/>
-      <Route path='/account' element = {<Account/>} />
       <Route path="*" element={<Navigate to="/chat/new" replace />} />
     </Routes>
 

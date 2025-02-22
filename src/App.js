@@ -1,12 +1,14 @@
 import './App.css';
 import TextToSpeech from './Components/TextToSpeech/TextToSpeech';
-import { showInfoToast, ToastNotifications } from './Components/ToastMessage/ToastMessageComponent';
+import { showErrorToast, showInfoToast, ToastNotifications } from './Components/ToastMessage/ToastMessageComponent';
 import useIdleTimer from './hook/useIdleTimer';
 import {useEffect} from "react"
 import AppLayout from './Layout/AppLayout';
 import { useAuth } from './Context/AuthContext';
+import axios from 'axios';
+import { prod_be_url } from './utils/config';
 function App() {
-  const {isAuthenticated,logout} = useAuth();
+  const {isAuthenticated,logout,setChatHistory} = useAuth();
   // const { startTimer, stopTimer } = useIdleTimer(handleLogout, 1800000);
   const { startTimers, stopTimers } = useIdleTimer(handleLogout, 1800000, 82800000); 
   function handleLogout ()  {
@@ -38,6 +40,32 @@ function App() {
       stopTimers(); // Stop timers on logout
     }
   }, [isAuthenticated]);
+
+  const chatHistoryApi = async() => {
+      try{
+          const token = localStorage.getItem("token") || "";
+          const response = await axios.get(`${prod_be_url}/grammar-chat-history`,{
+              headers:{
+                  Authorization: `Bearer ${token}`
+              }
+          })
+          setChatHistory(response?.data?.data);
+  
+      }catch(error){
+          console.log("Error :",error)
+          if(error?.response?.data){
+            showErrorToast(error?.response?.data?.message);
+          }
+          else{
+            showErrorToast(error.message);
+          }
+        }
+  }
+
+  useEffect(() => {
+    chatHistoryApi();
+    console.log("ChatHis");
+  },[isAuthenticated])
 
   return (
     <div >
