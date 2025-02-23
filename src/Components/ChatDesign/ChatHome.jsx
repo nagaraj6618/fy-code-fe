@@ -133,7 +133,7 @@ const ChatHome = () => {
             })
             setData((prevData) => 
                 prevData.map((item) => 
-                item.id === data_id ? { ...item, response: response.data.data } : item
+                item.id === data_id ? { ...item, response: response.data.data.response ,request:response.data.data.request,_id:response.data.data._id} : item
                 )
             );
             console.log(response.data)
@@ -213,7 +213,7 @@ const ChatHome = () => {
                 {data.map((chat, index) => (
                     <div key={index} className="message-container mb-4 opacity-100 animate-fadeIn">
                         <ChatSent message={chat.request} />
-                       { chat?.response?.score &&<ChatRecived score = {chat?.response?.score}  suggestion={chat?.response?.suggest}/>}
+                       { chat?.response?.score &&<ChatRecived score = {chat?.response?.score}  suggestion={chat?.response?.suggestion} voiceMessage={chat?.response?.voiceMessage} id={chat._id} correctedSentence={chat?.response?.correctedSentence} />}
                        
                     </div>
                 ))}
