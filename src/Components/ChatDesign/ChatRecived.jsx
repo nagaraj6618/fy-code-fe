@@ -40,7 +40,7 @@ const ChatRecived = ({ message, score, suggestion, voiceMessage, id, correctedSe
                       key={i}
                       className="absolute text-2xl"
                       style={{
-                        animation: `pop 0.6s ease-out forwards`,
+                        animation: `pop 1s ease-out forwards`,
                         top: `${Math.random() * 100}%`,
                         left: `${Math.random() * 100}%`,
                       }}
