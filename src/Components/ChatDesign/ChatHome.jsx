@@ -266,8 +266,8 @@ const ChatHome = () => {
             <div className={`chat-content flex-grow overflow-y-auto p-4 transition-all duration-500 ${id === "new" ? "flex flex-col items-center justify-center text-center" : ""}`}>
                 {(id === "new") ? (
                     <div className="welcome-message text-xl font-semibold text-gray-300 animate-fadeIn">
-                        <p className="text-green-400 text-2xl mb-3">👋 Hi, I am here to help you with grammar!</p>
-                        <p className="text-gray-400">Start by typing a sentence or speaking into the mic.</p>
+                        <p className="text-green-400 text-2xl mb-3 animate-bounce">👋 Hi, I am here to help you with grammar!</p>
+                        <p className="text-gray-400 animate-fadeInSlow">Start by typing a sentence or speaking into the mic.</p>
                     </div>
                 ) : (
                     data.map((chat, index) => (
