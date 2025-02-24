@@ -27,6 +27,7 @@ const ChatHome = () => {
     const recognitionRef = useRef(null);
 
     // Initialize Speech Recognition once
+
     useEffect(() => {
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         if (SpeechRecognition) {
@@ -208,36 +209,92 @@ const ChatHome = () => {
         }
     }
     return (
+        // <div className="flex flex-col h-full bg-gray-900 text-white">
+        //     {/* Chat content */}
+        //     <div className="chat-content flex-grow overflow-y-auto p-4 transition-all duration-500">
+        //         {data.map((chat, index) => (
+        //             <div key={index} className="message-container mb-4 opacity-100 animate-fadeIn">
+        //                 <ChatSent message={chat.request} />
+        //                { (chat?.response?.score||chat?.response?.score===0) &&<ChatRecived score = {chat?.response?.score}  suggestion={chat?.response?.suggestion} voiceMessage={chat?.response?.voiceMessage} id={chat._id} correctedSentence={chat?.response?.correctedSentence} index={index} activeIndex = {activeIndex} setActiveIndex={setActiveIndex}/>}
+                       
+        //             </div>
+        //         ))}
+        //         {isLoading &&
+        //          <div className='flex justify-start mb-4 '>
+        //             <Loading/>
+        //          </div>
+        //          }
+        //          {
+        //             isError &&
+        //             <div><ErrorMessage/></div>
+        //          }
+        //     </div>
+
+        //     {/* Input and Send button */}
+        //     <form onSubmit={handleSend} >
+        //         <div className="flex items-center  p-2 mt-auto mb-1">
+        //             <input
+        //                 type="text"
+        //                 className="w-4/5 p-2 border border-gray-600 rounded-full text-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+        //                 placeholder="Type your message..."
+        //                 value={message}
+        //                 onChange={(e) =>{ setMessage(e.target.value);  setIsError(false);}}
+        //             />
+        //             <button
+        //                 type="submit"
+        //                 className="ml-5 p-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition-all duration-300 ease-in-out"
+        //             >
+        //                 <IoMdSend />
+        //             </button>
+        //             <button
+        //                 onClick={toggleRecording}
+        //                 className={`ml-3 p-2 rounded-full ${isRecording ? "bg-red-500" : "bg-gray-200 text-black"} hover:bg-opacity-80 transition-all duration-300 ease-in-out`}
+        //             >
+        //                 {isRecording ? <PiWaveform /> : <MdOutlineMicNone />}
+        //             </button>
+        //         </div>
+        //     </form>
+        // </div>
         <div className="flex flex-col h-full bg-gray-900 text-white">
             {/* Chat content */}
-            <div className="chat-content flex-grow overflow-y-auto p-4 transition-all duration-500">
-                {data.map((chat, index) => (
-                    <div key={index} className="message-container mb-4 opacity-100 animate-fadeIn">
-                        <ChatSent message={chat.request} />
-                       { (chat?.response?.score||chat?.response?.score===0) &&<ChatRecived score = {chat?.response?.score}  suggestion={chat?.response?.suggestion} voiceMessage={chat?.response?.voiceMessage} id={chat._id} correctedSentence={chat?.response?.correctedSentence} index={index} activeIndex = {activeIndex} setActiveIndex={setActiveIndex}/>}
-                       
+            <div className={`chat-content flex-grow overflow-y-auto p-4 transition-all duration-500 ${id === "new" ? "flex flex-col items-center justify-center text-center" : ""}`}>
+                {(id === "new") ? (
+                    <div className="welcome-message text-xl font-semibold text-gray-300 animate-fadeIn">
+                        <p className="text-green-400 text-2xl mb-3">👋 Hi, I am here to help you with grammar!</p>
+                        <p className="text-gray-400">Start by typing a sentence or speaking into the mic.</p>
                     </div>
-                ))}
-                {isLoading &&
-                 <div className='flex justify-start mb-4 '>
-                    <Loading/>
-                 </div>
-                 }
-                 {
-                    isError &&
-                    <div><ErrorMessage/></div>
-                 }
+                ) : (
+                    data.map((chat, index) => (
+                        <div key={index} className="message-container mb-4 opacity-100 animate-fadeIn">
+                            <ChatSent message={chat.request} />
+                            {(chat?.response?.score || chat?.response?.score === 0) &&
+                                <ChatRecived
+                                    score={chat?.response?.score}
+                                    suggestion={chat?.response?.suggestion}
+                                    voiceMessage={chat?.response?.voiceMessage}
+                                    id={chat._id}
+                                    correctedSentence={chat?.response?.correctedSentence}
+                                    index={index}
+                                    activeIndex={activeIndex}
+                                    setActiveIndex={setActiveIndex}
+                                />
+                            }
+                        </div>
+                    ))
+                )}
+                {isLoading && <div className="flex justify-start mb-4"><Loading /></div>}
+                {isError && <div><ErrorMessage /></div>}
             </div>
 
             {/* Input and Send button */}
-            <form onSubmit={handleSend}>
+            <form onSubmit={handleSend} className={`p-2 flex flex-col mt-auto mb-3 ${id === "new" ? "w-full" : ""}`}>
                 <div className="flex items-center  p-2 mt-auto mb-1">
                     <input
                         type="text"
                         className="w-4/5 p-2 border border-gray-600 rounded-full text-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
                         placeholder="Type your message..."
                         value={message}
-                        onChange={(e) =>{ setMessage(e.target.value);  setIsError(false);}}
+                        onChange={(e) => { setMessage(e.target.value); setIsError(false); }}
                     />
                     <button
                         type="submit"
@@ -254,6 +311,8 @@ const ChatHome = () => {
                 </div>
             </form>
         </div>
+
+        
     );
 };
 
