@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
 const ChatHome = () => {
+    const [activeIndex, setActiveIndex] = useState(null);
     const navigate = useNavigate();
     const {id} = useParams();
     const {setChatHistory,isAuthenticated} = useAuth();
@@ -213,7 +214,7 @@ const ChatHome = () => {
                 {data.map((chat, index) => (
                     <div key={index} className="message-container mb-4 opacity-100 animate-fadeIn">
                         <ChatSent message={chat.request} />
-                       { (chat?.response?.score||chat?.response?.score===0) &&<ChatRecived score = {chat?.response?.score}  suggestion={chat?.response?.suggestion} voiceMessage={chat?.response?.voiceMessage} id={chat._id} correctedSentence={chat?.response?.correctedSentence} />}
+                       { (chat?.response?.score||chat?.response?.score===0) &&<ChatRecived score = {chat?.response?.score}  suggestion={chat?.response?.suggestion} voiceMessage={chat?.response?.voiceMessage} id={chat._id} correctedSentence={chat?.response?.correctedSentence} index={index} activeIndex = {activeIndex} setActiveIndex={setActiveIndex}/>}
                        
                     </div>
                 ))}

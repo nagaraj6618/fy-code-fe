@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import TextToSpeech from "../TextToSpeech/TextToSpeech";
 
-const ChatRecived = ({ message, score, suggestion, voiceMessage, id, correctedSentence }) => {
+const ChatRecived = ({ message, score, suggestion, voiceMessage, id, correctedSentence,index ,activeIndex,setActiveIndex}) => {
   const [showEffects, setShowEffects] = useState(false);
 
   return (
@@ -54,7 +54,10 @@ const ChatRecived = ({ message, score, suggestion, voiceMessage, id, correctedSe
           )}
         </div>
         <div className="mt-3">
-          <TextToSpeech text={voiceMessage} />
+          <TextToSpeech text={voiceMessage}isPlaying={activeIndex === index} // Check if this button is active
+            setPlaying={(isPlaying) => setActiveIndex(isPlaying ? index : null)} // Set active index
+            isAnyPlaying={activeIndex !== null}   // Track active button
+           />
         </div>
       </div>
       <style>
