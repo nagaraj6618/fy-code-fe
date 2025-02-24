@@ -41,7 +41,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-900 p-4">
+    <div className="flex flex-col justify-center items-center h-screen bg-gray-900 p-4">
       <motion.h1 
         className="text-white text-3xl font-bold mb-6" 
         initial={{ opacity: 0, y: -20 }} 

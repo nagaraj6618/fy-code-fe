@@ -80,7 +80,7 @@ const NavbarComponent = ({ closeSidebar }) => {
       }
 }
   return (
-    <nav className="flex flex-col h-full w-full text-white z-40">
+    <nav className="flex flex-col min-h-full w-full text-white z-40">
       {/* Chat History Section */}
       <div className="flex-1 overflow-y-auto">
         <h2 className="flex items-center justify-between text-lg md:text-base sm:text-sm font-semibold mb-2 border-b border-gray-700 pb-2">
