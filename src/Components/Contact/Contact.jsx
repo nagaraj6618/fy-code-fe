@@ -1,19 +1,43 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../Context/AuthContext';
 import { motion } from 'framer-motion';
+import axios from 'axios';
+import {prod_be_url} from "../../utils/config";
+import {showErrorToast, showSuccessToast} from "../ToastMessage/ToastMessageComponent"
 
 const Contact = () => {
   const { isAuthenticated } = useAuth();
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    setLoading(true);
     // const userData = localStorage.getItem()
+    const token = localStorage.getItem("token") || "";
     console.log('Form submitted:', formData);
+    try{
+      const response = await axios.post(`${prod_be_url}/contact`,{
+        email : formData.email,
+        name : formData.name,
+        message : formData.message.trim()
+      },{
+        headers:{
+          Authorization:`Bearer ${token}`
+        }
+      });
+      if(response?.data?.success){
+        showSuccessToast(response?.data.message);
+      }
+      setLoading(false);
+    }catch(error){
+      showErrorToast("An Error Occured.Please try again later.");
+      setLoading(false);
+    }
   };
 
   return (
@@ -64,9 +88,10 @@ const Contact = () => {
         </div>
         <button 
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300 flex justify-center items-center"
+          disabled={loading}
         >
-          Send
+          {loading ? <motion.div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></motion.div> : 'Send'}
         </button>
       </form>
     </div>
