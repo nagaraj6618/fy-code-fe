@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [isOtpRequired, setIsOtpRequired] = useState(
     localStorage.getItem("otpRequired") === "true"
   );
+  const [isChatLoading ,setIsChatLoading] = useState(true);
   const [chatHistory,setChatHistory] = useState([]);
 
   useEffect(() => {
@@ -56,7 +57,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isOtpRequired, login, register, verifyOtp, logout, chatHistory,setChatHistoryData,setChatHistory }}>
+    <AuthContext.Provider value={{ isAuthenticated, isOtpRequired, login, register, verifyOtp, logout, chatHistory,setChatHistoryData,setChatHistory,isChatLoading,setIsChatLoading }}>
       {children}
     </AuthContext.Provider>
   );

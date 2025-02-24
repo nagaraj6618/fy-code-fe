@@ -8,7 +8,7 @@ import { useAuth } from './Context/AuthContext';
 import axios from 'axios';
 import { prod_be_url } from './utils/config';
 function App() {
-  const {isAuthenticated,logout,setChatHistory} = useAuth();
+  const {isAuthenticated,logout,setChatHistory,setIsChatLoading} = useAuth();
   // const { startTimer, stopTimer } = useIdleTimer(handleLogout, 1800000);
   const { startTimers, stopTimers } = useIdleTimer(handleLogout, 1800000, 82800000); 
   function handleLogout ()  {
@@ -43,6 +43,7 @@ function App() {
 
   const chatHistoryApi = async() => {
       try{
+          setIsChatLoading(true);
           const token = localStorage.getItem("token") || "";
           const response = await axios.get(`${prod_be_url}/grammar-chat-history`,{
               headers:{
@@ -50,15 +51,17 @@ function App() {
               }
           })
           setChatHistory(response?.data?.data);
+          setIsChatLoading(false);
   
       }catch(error){
-          console.log("Error :",error)
+          console.log("Error :",error);
+          setIsChatLoading(false);
+          setChatHistory([]);
         }
   }
 
   useEffect(() => {
     chatHistoryApi();
-    console.log("ChatHis");
   },[isAuthenticated])
 
   return (

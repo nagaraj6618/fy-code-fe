@@ -17,7 +17,7 @@ const ChatHome = () => {
     const [activeIndex, setActiveIndex] = useState(null);
     const navigate = useNavigate();
     const {id} = useParams();
-    const {setChatHistory,isAuthenticated} = useAuth();
+    const {setChatHistory,isAuthenticated,setIsChatLoading} = useAuth();
     const [data, setData] = useState([
     ]);
     const [isLoading ,setIsLoading] = useState(false);
@@ -170,6 +170,10 @@ const ChatHome = () => {
 
     const chatHistoryApi = async() => {
         try{
+            setIsChatLoading(true);
+            if(id !== "new"){
+                setIsChatLoading(false)
+            }
             const token = localStorage.getItem("token") || "";
             const response = await axios.get(`${prod_be_url}/grammar-chat-history`,{
                 headers:{
@@ -179,10 +183,12 @@ const ChatHome = () => {
             console.log(response.data);
             // setChatHistoryData(response?.data?.data);
             setChatHistory(response?.data?.data);
+            setIsChatLoading(false);
 
         }catch(error){
             console.log("Error :",error)
             // setIsLoading(false);
+            setIsChatLoading(false);
           }
     }
 

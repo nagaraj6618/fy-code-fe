@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { FaHistory, FaSignInAlt, FaUserPlus, FaInfoCircle, FaEnvelope, FaTrash } from 'react-icons/fa';
 import { useAuth } from '../../Context/AuthContext';
 import { CiLogout } from "react-icons/ci";
@@ -10,7 +10,8 @@ import { prod_be_url } from '../../utils/config';
 import { showErrorToast } from '../ToastMessage/ToastMessageComponent';
 
 const NavbarComponent = ({ closeSidebar }) => {
-  const { logout, isAuthenticated, chatHistory,setChatHistory } = useAuth();
+  const { logout, isAuthenticated, chatHistory,setChatHistory,isChatLoading,setIsChatLoading } = useAuth();
+  const navigate = useNavigate();
   const historyData = [
     { id: '1', name: 'Very Long History Name Example 1' },
     { id: '2', name: 'Another Long History Entry 2' },
@@ -55,6 +56,7 @@ const NavbarComponent = ({ closeSidebar }) => {
   }
   const chatHistoryApi = async() => {
     try{
+        setIsChatLoading(true);
         const token = localStorage.getItem("token") || "";
         const response = await axios.get(`${prod_be_url}/grammar-chat-history`,{
             headers:{
@@ -63,7 +65,7 @@ const NavbarComponent = ({ closeSidebar }) => {
         })
         console.log(response.data);
         setChatHistory(response?.data?.data);
-
+        setIsChatLoading(false);
     }catch(error){
         console.log("Error :",error)
         if(error?.response?.data){
@@ -72,7 +74,9 @@ const NavbarComponent = ({ closeSidebar }) => {
         else{
           showErrorToast(error.message);
         }
-        // setIsLoading(false);
+        setIsChatLoading(false);
+        setChatHistory([]);
+        navigate("/chat/new")
       }
 }
   return (
@@ -94,8 +98,22 @@ const NavbarComponent = ({ closeSidebar }) => {
             </Link>
           )}
         </h2>
-        <ul>
-          {chatHistory.map((data) => (
+        {isChatLoading ? (
+          
+          <div className="flex flex-col items-center justify-center py-4">
+            {/* Loader Animation */}
+            <div className="w-10 h-10 border-4 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
+            
+            {/* Loading Text */}
+            <p className="text-sm md:text-base font-medium mt-2 text-gray-400">
+              Loading Chats...
+            </p>
+          </div>):
+          
+        
+
+        (<ul>
+          {chatHistory.length>0 ? chatHistory.map((data) => (
             <li key={data._id} className="mb-2 flex justify-between items-center">
               <Link
                 to={`/chat/${data._id}`}
@@ -113,8 +131,13 @@ const NavbarComponent = ({ closeSidebar }) => {
                 <FaTrash />
               </button>
             </li>
-          ))}
+          )):
+          <li className="flex flex-col items-center justify-center py-6 text-gray-400">
+        <p className="text-sm md:text-base font-medium">No Chat History Found</p>
+      </li>
+          }
         </ul>
+        )}
       </div>
 
       {/* Navigation Links */}
