@@ -138,7 +138,7 @@ const Contact = () => {
           }
         </div>
       ) : (
-        <div className="flex flex-col justify-center items-center h-screen bg-gradient-to-b from-gray-900 to-black">
+        <div className="flex flex-col justify-center items-center h-[95vh] bg-gradient-to-b">
           <motion.h1
             className="text-white text-3xl font-bold mb-6"
             initial={{ opacity: 0, y: -20 }}
