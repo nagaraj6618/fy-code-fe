@@ -160,9 +160,9 @@ const AIChatHome = () => {
    }
 
    return (
-      <div className="flex flex-col h-full bg-gray-900 text-white">
+      <div className="flex flex-col h-full bg-gray-900 text-white ">
          {/* Chat content */}
-         <div className={`chat-content flex-grow overflow-y-auto p-4 transition-all duration-500 ${id === "new" ? "flex flex-col items-center justify-center text-center" : ""}`}>
+         <div className={`max-w-xl max-h-[90vh] chat-content flex-grow overflow-y-auto p-4 transition-all duration-500 ${id === "new" ? "flex flex-col items-center justify-center text-center" : ""}`}>
             {data.length <=0 ? (
                <div className="welcome-message text-xl font-semibold text-gray-300 animate-fadeIn text-center">
                   <p className="text-green-400 text-2xl mb-3 animate-bounce">👋 Hi, I am here to help you with grammar!</p>
@@ -170,9 +170,9 @@ const AIChatHome = () => {
                </div>
             ) : (
                  data.map((chat, index) => (
-                     <div key={index} className="message-container mb-4 opacity-100 animate-fadeIn">
+                     <div key={index} className="message-container  mb-2 opacity-100 animate-fadeIn">
                          <ChatSent message={chat.request} />
-                         <ReadmeViewer content={chat.response.content}/>
+                         <ReadmeViewer content={chat.response.content} className="h-[90vh] w-10"/>
                      </div>
                  ))
                // <div></div>
@@ -209,6 +209,41 @@ const AIChatHome = () => {
          </form>
       </div>
 
+      // <div className="flex flex-col h-full bg-gray-900 text-white">
+      //    <div className="chat-content flex-grow p-4 overflow-y-auto max-h-[90vh] w-full  mx-auto border border-gray-700 rounded-lg">
+      //       {data.length === 0 ? (
+      //          <div className="text-center text-gray-400">Start by typing a message or using the mic.</div>
+      //       ) : (
+      //          data.map((chat, index) => (
+      //             <div key={index} className="mb-2">
+      //                <ChatSent message={chat.request} />
+      //                <ReadmeViewer content={chat.response.content} />
+      //             </div>
+      //          ))
+      //       )}
+      //       {isLoading && <Loading />}
+      //       {isError && <ErrorMessage />}
+      //    </div>
+
+      // //    <form onSubmit={handleSend} className="p-2 flex flex-col w-full max-w-2xl mx-auto">
+      // //       <div className="flex items-center p-2">
+      // //          <input
+      //             type="text"
+      //             className="w-full p-2 border border-gray-600 rounded-full bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+      //             placeholder="Type your message..."
+      //             value={message}
+      //             onChange={(e) => { setMessage(e.target.value); setIsError(false); }}
+      //          />
+      //          <button type="submit" className="ml-2 p-2 bg-green-500 text-white rounded-full hover:bg-green-600">
+      //             <IoMdSend />
+      //          </button>
+      //          <button onClick={toggleRecording} className={`ml-2 p-2 rounded-full ${isRecording ? "bg-red-500" : "bg-gray-200 text-black"}`}>
+      //             {isRecording ? <PiWaveform /> : <MdOutlineMicNone />}
+      //          </button>
+      //       </div>
+      //    </form>
+      // </div>
+      
    )
 }
 
