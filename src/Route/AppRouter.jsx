@@ -12,6 +12,9 @@ import PrivateOtpRoute from './PrivateOtpRoute';
 import {Navigate} from "react-router-dom"
 import Account from '../Components/Account/Account';
 import ForgotPassword from '../Components/ForgotPassword/ForgotPassword';
+// import ReadmeViewer from '../Components/ReadmeViewer/ReadmeViewer';
+// import AIChatHome from '../Components/ChatDesign/AIChatHome';
+import AIChatRedirect from '../Components/ChatDesign/AIChatRedirect';
 const AppRouter = () => {
   return (
     <Routes>
@@ -19,6 +22,7 @@ const AppRouter = () => {
       <Route element={<PrivateRoute/>}>
         <Route path='/chat/:id' element={<Home/>}/>
         <Route path='/account' element = {<Account/>} />
+        <Route path="/ai/:id" element={<AIChatRedirect/>} />
       </Route>
       <Route element={<PublicRoute/>}>
         <Route path="/signin" element={<Login/>}/>
