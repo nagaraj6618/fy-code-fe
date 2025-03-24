@@ -16,6 +16,7 @@ import ForgotPassword from '../Components/ForgotPassword/ForgotPassword';
 // import AIChatHome from '../Components/ChatDesign/AIChatHome';
 import AIChatRedirect from '../Components/ChatDesign/AIChatRedirect';
 import AITools from '../Components/AITools/AITools';
+import LearnGrammarChat from '../Components/ChatDesign/LearnGrammarChat';
 const AppRouter = () => {
   return (
     <Routes>
@@ -23,6 +24,7 @@ const AppRouter = () => {
       <Route element={<PrivateRoute/>}>
         <Route path='/chat/:id' element={<Home/>}/>
         <Route path='/account' element = {<Account/>} />
+        <Route path="/ai/learn-grammar" element = {<LearnGrammarChat/>} />
         <Route path="/ai/:id" element={<AIChatRedirect/>} />
         <Route path="ai-tools" element={<AITools/>} />
       </Route>
