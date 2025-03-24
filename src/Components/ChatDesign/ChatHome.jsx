@@ -12,8 +12,10 @@ import { showErrorToast } from '../ToastMessage/ToastMessageComponent.jsx';
 import { useAuth } from '../../Context/AuthContext.js';
 import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
+import WakingUpInstance from '../WakingUpInstance/WakingUpInstanc.jsx';
 
 const ChatHome = () => {
+    const [isModelActive , setIsModelActive] = useState(false);
     const [activeIndex, setActiveIndex] = useState(null);
     const navigate = useNavigate();
     const {id} = useParams();
@@ -214,6 +216,39 @@ const ChatHome = () => {
             console.log("error",error.message);
         }
     }
+
+    useEffect(() => {
+        const fetchData = async () => {
+          console.log("Fetching data...");
+          const source = axios.CancelToken.source();
+          
+          const timeout = setTimeout(() => {
+            source.cancel("The API is not running");
+            console.log("The API is not running");
+          }, 5000);
+    
+          try {
+            const response = await axios.post(`${prod_model_be_url}/calculate_score`, { text: "testing" }, { cancelToken: source.token });
+            clearTimeout(timeout);
+            console.log("API Response:", response.data);
+            setIsModelActive(true);
+            clearInterval(interval);
+          } catch (error) {
+            if (axios.isCancel(error)) {
+              console.log("The API is not running");
+              
+            } else {
+              console.log("Error fetching data:", error);
+
+            }
+            setIsModelActive(false);
+          }
+        };
+        
+        fetchData();
+        const interval = setInterval(fetchData, 5000);
+        return () => clearInterval(interval);
+      }, []);
     return (
         // <div className="flex flex-col h-full bg-gray-900 text-white">
         //     {/* Chat content */}
@@ -263,8 +298,9 @@ const ChatHome = () => {
         // </div>
         <div className="flex flex-col h-full bg-gray-900 text-white">
             {/* Chat content */}
-            <div className={`chat-content flex-grow overflow-y-auto p-4 transition-all duration-500 ${id === "new" ? "flex flex-col items-center justify-center text-center" : ""}`}>
-                {(id === "new") ? (
+            { !isModelActive && <WakingUpInstance/> }
+            { isModelActive && <div className={`chat-content flex-grow overflow-y-auto p-4 transition-all duration-500 ${((id === "new" || !id) && !data.length>0 )? "flex flex-col items-center justify-center text-center" : ""}`}>
+                {((id === "new" || !id) && !data.length>0) ? (
                     <div className="welcome-message text-xl font-semibold text-gray-300 animate-fadeIn">
                         <p className="text-green-400 text-2xl mb-3 animate-bounce">👋 Hi, I am here to help you with grammar!</p>
                         <p className="text-gray-400 animate-fadeInSlow">Start by typing a sentence or speaking into the mic.</p>
@@ -290,10 +326,10 @@ const ChatHome = () => {
                 )}
                 {isLoading && <div className="flex justify-start mb-4"><Loading /></div>}
                 {isError && <div><ErrorMessage /></div>}
-            </div>
+            </div>}
 
             {/* Input and Send button */}
-            <form onSubmit={handleSend} className={`p-2 flex flex-col mt-auto mb-3 ${id === "new" ? "w-full" : ""}`}>
+            { isModelActive && <form onSubmit={handleSend} className={`p-2 flex flex-col mt-auto mb-3 ${id === "new" ? "w-full" : ""}`}>
                 <div className="flex items-center  p-2 mt-auto mb-1">
                     <input
                         type="text"
@@ -315,7 +351,7 @@ const ChatHome = () => {
                         {isRecording ? <PiWaveform /> : <MdOutlineMicNone />}
                     </button>
                 </div>
-            </form>
+            </form>}
         </div>
 
         
