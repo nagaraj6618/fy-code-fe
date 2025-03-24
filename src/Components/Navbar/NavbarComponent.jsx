@@ -8,6 +8,7 @@ import { PiNotePencilDuotone } from "react-icons/pi";
 import axios from 'axios';
 import { prod_be_url } from '../../utils/config';
 import { showErrorToast } from '../ToastMessage/ToastMessageComponent';
+import { BsRobot } from "react-icons/bs";
 
 const NavbarComponent = ({ closeSidebar }) => {
   const { logout, isAuthenticated, chatHistory,setChatHistory,isChatLoading,setIsChatLoading } = useAuth();
@@ -171,6 +172,13 @@ const NavbarComponent = ({ closeSidebar }) => {
                     onClick={handleLogout}
                   >
                     <CiLogout /> Logout
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/ai-tools"
+                    className="flex items-center gap-2 p-2 rounded-md transition hover:bg-gray-700 text-base md:text-sm sm:text-xs"
+                  >
+                    <BsRobot /> AI Tools
                   </Link>
                 </li>
                 <li>

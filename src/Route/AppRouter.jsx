@@ -15,6 +15,7 @@ import ForgotPassword from '../Components/ForgotPassword/ForgotPassword';
 // import ReadmeViewer from '../Components/ReadmeViewer/ReadmeViewer';
 // import AIChatHome from '../Components/ChatDesign/AIChatHome';
 import AIChatRedirect from '../Components/ChatDesign/AIChatRedirect';
+import AITools from '../Components/AITools/AITools';
 const AppRouter = () => {
   return (
     <Routes>
@@ -23,6 +24,7 @@ const AppRouter = () => {
         <Route path='/chat/:id' element={<Home/>}/>
         <Route path='/account' element = {<Account/>} />
         <Route path="/ai/:id" element={<AIChatRedirect/>} />
+        <Route path="ai-tools" element={<AITools/>} />
       </Route>
       <Route element={<PublicRoute/>}>
         <Route path="/signin" element={<Login/>}/>
